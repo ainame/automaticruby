@@ -8,35 +8,37 @@
 # License::   Licensed under the GNU GENERAL PUBLIC LICENSE, Version 3.0.
 
 module Automatic
-  class FilterIgnore
-    def initialize(config, pipeline=[])
-      @config = config
-      @pipeline = pipeline
-    end
-
-    def exclude(link)
-      detection = false
-      @config['exclude'].each {|e|
-        detection = true if link.include?(e.chomp)
-      }
-      if detection
-        Log.puts("info", "Excluded: #{link}")
+  class Plugin
+    class FilterIgnore < Plugin
+      def initialize(config, pipeline=[])
+        @config = config
+        @pipeline = pipeline
       end
-      detection
-    end
 
-    def run
-      return_feeds = []
-      @pipeline.each {|feeds|
-        ignore = false
-        unless feeds.nil?
-          feeds.items.each {|feed|
-            ignore = true if exclude(feed.link)
-          }
+      def exclude(link)
+        detection = false
+        @config['exclude'].each {|e|
+          detection = true if link.include?(e.chomp)
+        }
+        if detection
+          Log.puts("info", "Excluded: #{link}")
         end
-        return_feeds << feeds unless ignore
-      }
-      return_feeds
+        detection
+      end
+
+      def run
+        return_feeds = []
+        @pipeline.each {|feeds|
+          ignore = false
+          unless feeds.nil?
+            feeds.items.each {|feed|
+              ignore = true if exclude(feed.link)
+            }
+          end
+          return_feeds << feeds unless ignore
+        }
+        return_feeds
+      end
     end
   end
 end

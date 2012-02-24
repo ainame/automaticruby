@@ -28,7 +28,7 @@ module Automatic
       @pipeline = []
       YAML.load(File.read(recipe))['plugins'].each do |plugin|
         require @available_plugins[plugin['module']]
-        klass = eval(plugin['module'])
+        klass = eval('Automatic::Plugin::' + plugin['module'])
         @pipeline = klass.new(plugin['config'], @pipeline).run
       end
     end

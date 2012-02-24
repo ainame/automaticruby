@@ -8,24 +8,26 @@
 # License::   Licensed under the GNU GENERAL PUBLIC LICENSE, Version 3.0.
 
 module Automatic
-  class PublishConsole
-    require 'pp'
-    attr_accessor :hb
+  class Plugin
+    class PublishConsole < Plugin
+      require 'pp'
+        attr_accessor :hb
   
-    def initialize(config, pipeline=[])
-      @config = config
-      @pipeline = pipeline
-    end
+      def initialize(config, pipeline=[])
+        @config = config
+        @pipeline = pipeline
+      end
   
-    def run
-      @pipeline.each {|feeds|
-        unless feeds.nil?
-          feeds.items.each {|feed|
-            pp feed
-          }
-        end
-      }
-      @pipeline
+      def run
+        @pipeline.each {|feeds|
+          unless feeds.nil?
+            feeds.items.each {|feed|
+              pp feed
+            }
+          end
+        }
+        @pipeline
+      end
     end
   end
 end
