@@ -7,22 +7,24 @@
 # Copyright:: 774 Copyright (c) 2012
 # License::   Licensed under the GNU GENERAL PUBLIC LICENSE, Version 3.0.
 
-class SubscriptionFeed
-  def initialize(config, pipeline=[])
-    @config = config
-    @pipeline = pipeline
-  end
-
-  def run
-    @config['feeds'].each {|feed|
-      begin
-        Log.puts("info", "Parsing: #{feed}")
-        rss = FeedParser.get_rss(feed)
-        @pipeline << rss
-      rescue
-        Log.puts("error", "Fault in parsing: #{feed}")
-      end
-    }
-    @pipeline
+module Automatic  
+  class SubscriptionFeed
+    def initialize(config, pipeline=[])
+      @config = config
+      @pipeline = pipeline
+    end
+  
+    def run
+      @config['feeds'].each {|feed|
+        begin
+          Log.puts("info", "Parsing: #{feed}")
+          rss = FeedParser.get_rss(feed)
+          @pipeline << rss
+        rescue
+          Log.puts("error", "Fault in parsing: #{feed}")
+        end
+      }
+      @pipeline
+    end
   end
 end

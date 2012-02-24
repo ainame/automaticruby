@@ -7,10 +7,12 @@
 # Copyright:: 774 Copyright (c) 2012
 # License::   Licensed under the GNU GENERAL PUBLIC LICENSE, Version 3.0.
 
-class Log
-  def self.puts(level, message)
-    t = Time.now.strftime("%Y/%m/%d %X")
-    print "#{t} [#{level}] #{message}\n"
+module Automatic
+    class Log
+    def self.puts(level, message)
+      t = Time.now.strftime("%Y/%m/%d %X")
+      print "#{t} [#{level}] #{message}\n"
+    end
   end
 end
 

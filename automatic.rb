@@ -39,5 +39,5 @@ if __FILE__ == $0
     $stderr.puts parser.help
     exit 1
   end
-  Core.pipeline(recipe)
+  Automatic::Core.pipeline(recipe)
 end
